@@ -1,1 +1,1 @@
-# spark-app-stream
+#spark-stream-app
