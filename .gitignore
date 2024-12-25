@@ -1,0 +1,30 @@
+# Ignore IntelliJ IDEA project files
+.idea/
+*.iml
+
+# Ignore build-related directories and files
+.bsp/
+target/
+
+# Ignore SBT specific files
+project/target/
+project/project/
+project/*.tmp
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+
+# Ignore data files (if not required in the repository)
+data/
+
+# Generated documentation
+*.html
+*.pdf
