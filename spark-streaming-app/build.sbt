@@ -11,8 +11,8 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % "3.4.0",
   "org.apache.spark" %% "spark-sql" % "3.4.0",
   "org.apache.spark" %% "spark-mllib" % "3.4.0",
+  "org.apache.spark" %% "spark-sql-kafka-0-10" % "3.4.0",
   "org.apache.spark" %% "spark-streaming-kafka-0-10" % "3.4.0",
-  "org.mongodb.spark" %% "mongo-spark-connector" % "3.0.0",
   "com.johnsnowlabs.nlp" %% "spark-nlp" % "5.4.0",
 
 )
