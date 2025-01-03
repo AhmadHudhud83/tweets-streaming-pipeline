@@ -2,7 +2,7 @@
 
 This program aims to simulate the process of processing data streams and storing them in a MongoDB Database in NoSQL Format using Apache Spark Structured Stream integration with Apache Kafka , in order to consume them for a tweets real-time tracker application.
 
-![Streaming Pipeline](images\about-project-stream-app.jpg"
+![Streaming Pipeline](images\about-project-stream-app.jpg)
 ## Description
 
 - **The first stage of the program begins by reading the raw data from a JSON dataset file. The data is processed in microbatches, with each microbatch containing no more than 10 records. To simulate flow, an artificial delay of five seconds is introduced between processing each microbatch. The processed microbatches are then published to a Kafka topic designated for storing raw streamed tweets.**
