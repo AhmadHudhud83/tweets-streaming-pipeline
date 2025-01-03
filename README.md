@@ -120,9 +120,10 @@ git clone  https://github.com/AhmadHudhud83/tweets-streaming-pipeline.git
 
 Contributors names and contact info
 
-- [@Ahmad Hudhud](https://example.com/dompizzie)
-- [@Momen Raddad](https://example.com/dompizzie)
-- [@Bayan Abdel-Haq](https://example.com/dompizzie)
+- [@Ahmad Hudhud](https://github.com/AhmadHudhud83)
+- [@Momen Raddad](https://github.com/momenraddad)
+- [@Bayan Abdalhaq](https://github.com/bayan7abdalhq)
+  
 
 ## Acknowledgments & Sources
 
