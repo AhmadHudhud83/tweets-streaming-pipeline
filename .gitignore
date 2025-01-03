@@ -24,8 +24,6 @@ Thumbs.db
 *.tmp
 *.swp
 
-# Ignore data files (if not required in the repository)
-data/
 
 # Generated documentation
 *.html
