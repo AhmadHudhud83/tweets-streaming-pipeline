@@ -107,7 +107,7 @@ git clone  https://github.com/AhmadHudhud83/tweets-streaming-pipeline.git
 5. **Run the MongoDB Writer Program:**
    - Execute the `MongoDBWriter.scala` program to save the processed tweets into the MongoDB `tweets` collection.
    - You can modify the MongoDB configuration within the program if you wish to use your own MongoDB setup.
-
+ 
 ---
 
 ### Help
