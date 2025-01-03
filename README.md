@@ -2,22 +2,26 @@
 
 This program aims to simulate the process of processing data streams and storing them in a MongoDB Database in NoSQL Format using Apache Spark Structured Stream integration with Apache Kafka , in order to consume them for a tweets real-time tracker application.
 
-![Streaming Pipeline]("images\about-project-stream-app.jpg")
-
+![Streaming Pipeline](images\about-project-stream-app.jpg"
 ## Description
 
 - **The first stage of the program begins by reading the raw data from a JSON dataset file. The data is processed in microbatches, with each microbatch containing no more than 10 records. To simulate flow, an artificial delay of five seconds is introduced between processing each microbatch. The processed microbatches are then published to a Kafka topic designated for storing raw streamed tweets.**
-  ![Flow Simulation]("images\raw-data-producer-simualtion.jpg")
-
+  <br><br><br>
+  ![Flow Simulation](images\raw-data-producer-simualtion.jpg)
+  <br><br><br>
 - **The second stage, the program's core, consumes raw data from Kafka, extracts attributes, builds the required schema, and processes tweets via a microservice for rule-based sentiment analysis. The processed data is converted into key-value format, categorized into tweets with or without geographic data, and stored in a Kafka topic for the processed load.**
-
-![Spark Structured Streaming Process]("images\spark-stream-app.jpg")
-![Processed Tweets Kafka Topic]("images\processed-tweets-topic.jpg")
+<br><br><br>
+![Spark Structured Streaming Process](images\spark-stream-app.jpg)
+<br><br><br>
+![Processed Tweets Kafka Topic](images\processed-tweets-topic.jpg)
+<br><br><br>
 
 - **The third stage involves a consumer program for the processed data, which creates attribute indexes to optimize search and query operations. The streaming data is then stored in a MongoDB database for use in the tweet tracking application.**
 
-![MongoDB Writer Consumer]("images\mongo-writer-consumer.jpg")
 
+<br><br><br>
+![MongoDB Writer Consumer](images\mongo-writer-consumer.jpg)
+<br><br><br>
 ## Getting Started
 
 ### Dependencies
