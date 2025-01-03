@@ -4,7 +4,6 @@
   object TweetSchema{
     def RawTweetSchema():StructType={
       val rawTweetSchema = StructType(Array(
-        StructField("id",StringType,nullable = false),
         StructField("text",StringType,nullable=false),
         StructField("created_at",StringType,nullable=true),
 
@@ -33,9 +32,8 @@
 
     def ProcessedTweetSchema(): StructType = {
       val processedTweetSchema = StructType(Array(
-        StructField("id", StringType, nullable = false),
         StructField("text", StringType, nullable = false),
-        StructField("timestamp", TimestampType, nullable = true),
+        StructField("timestamp", TimestampType, nullable = false),
         StructField("geo", StructType(Array(
           StructField("type", StringType, nullable = true),
           StructField("coordinates", ArrayType(DoubleType), nullable = true)
