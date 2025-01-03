@@ -122,7 +122,8 @@ Contributors names and contact info
 
 - [@Ahmad Hudhud](https://example.com/dompizzie)
 - [@Momen Raddad](https://example.com/dompizzie)
-- [@Bayan Abdel-Haq](https://example.com/dompizzie)
+- [@Bayan Abdel-Haq](https://github.com/bayan7abdalhq)
+  
 
 ## Acknowledgments & Sources
 
