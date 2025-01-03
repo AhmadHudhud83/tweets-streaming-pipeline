@@ -21,8 +21,7 @@ object MongoDBWriterApp {
     val collection = database.getCollection("tweets")
 
     // Define Indices
-    collection.createIndex(new Document("id", 1))
-    collection.createIndex(new Document("created_at", 1))
+    collection.createIndex(new Document("timestamp", 1))
     collection.createIndex(new Document("text", "text"))
     collection.createIndex(new Document("geo", 1))
     collection.createIndex(new Document("hashtags", 1))
@@ -47,10 +46,13 @@ object MongoDBWriterApp {
 
 
 
-    val final_df = BasicProcessing.basicProcessing(kafka_df,TweetSchema.ProcessedTweetSchema())
+    val processed_df = BasicProcessing.basicProcessing(kafka_df,TweetSchema.ProcessedTweetSchema())
+
+    //Only store non null geo tweets
+    val filtered_df = processed_df.filter(col("key")==="geo_tweets")
 
 
-    val query = final_df
+    val query = filtered_df
       .writeStream
       .format("mongodb")
       .trigger(Trigger.ProcessingTime("5 seconds"))

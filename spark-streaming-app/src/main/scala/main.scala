@@ -43,12 +43,24 @@ object Main {
 
     // Adding Keys & Values to store on processed topic , serialization of the whole row as JSON
 
-    val final_df = ProcessingTweets.processingTweets(kafka_df)
+    val processed_df = ProcessingTweets.processingTweets(kafka_df)
+
+
+    // filter geo null rows
+    val geoTweets_df =processed_df.filter(col("geo").isNotNull)
+      .withColumn("key",lit("geo_tweets").cast(StringType))
+    val nonGeoTweets_df = processed_df.filter(col("geo").isNull)
+      .withColumn("key",lit("non_geo_tweets").cast(StringType))
 
 
 
+    // concatenate to final_df
+    val concatenated_df =geoTweets_df.union(nonGeoTweets_df)
 
-
+    // Prepare for storing at kafka topic
+    val final_df = concatenated_df
+      .withColumn("value", to_json(struct(concatenated_df.columns.map(col):_*)))
+      .select("key", "value")
 
 
 
@@ -62,7 +74,7 @@ object Main {
       .writeStream
       .outputMode("append")
       .format("kafka")
-      .trigger(Trigger.ProcessingTime("10 seconds"))
+      .trigger(Trigger.ProcessingTime("5 seconds"))
       .option("kafka.bootstrap.servers","localhost:9092")
       .option("topic","processed-tweets-topic")
       .option("checkpointLocation","temp/kafka_checkpoint")

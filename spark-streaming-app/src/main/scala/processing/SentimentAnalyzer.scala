@@ -49,7 +49,7 @@ object SentimentAnalyzer {
 
 
     val result = pipeline.fit(df).transform(df)
-    val sentimentDF = result.withColumn("sentimentScore", sentimentToInt(col("sentimentScore.result"))).select("id", "text", "timestamp", "geo","hashtags", "sentimentScore")
+    val sentimentDF = result.withColumn("sentimentScore", sentimentToInt(col("sentimentScore.result"))).select("text", "timestamp", "geo","hashtags", "sentimentScore")
     sentimentDF.printSchema()
 
 
