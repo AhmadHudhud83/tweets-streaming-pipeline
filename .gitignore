@@ -5,7 +5,7 @@
 # Ignore build-related directories and files
 .bsp/
 target/
-
+*temp
 # Ignore SBT specific files
 project/target/
 project/project/
