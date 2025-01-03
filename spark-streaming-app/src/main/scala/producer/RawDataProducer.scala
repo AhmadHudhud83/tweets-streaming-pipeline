@@ -19,7 +19,8 @@ object RawDataProducer {
     val topic = "raw-tweets-topic"
 
     // Reading tweets json file line by line
-    val source = Source.fromFile("C:\\Users\\Gigabyte\\Desktop\\boulder_flood_geolocated_tweets.json")
+    val path ="data/boulder_flood_geolocated_tweets.json"
+    val source = Source.fromFile(path)
     val lines = source.getLines()
 
     // Collect messages in a queue buffer (batching them)
@@ -37,10 +38,11 @@ object RawDataProducer {
           buffer.clear()
           //Simulated Delay by 2-5 secs
           TimeUnit.SECONDS.sleep(5)
+
         }
       }
 
-      // If stream stopped and there remained any tweets in queue , then send them
+      // If stream stopped and there  remained any tweets in queue , then send them
       if (buffer.nonEmpty) {
         sendTweetsBatch(producer, topic, buffer)
       }

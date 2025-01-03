@@ -7,8 +7,9 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.varia.NullAppender
-import com.models.Tweet
-
+import com.models.TweetSchema
+import org.apache.spark.sql.streaming.Trigger
+import processing.ProcessingTweets
 object Main {
 
   def main(args: Array[String]): Unit = {
@@ -22,6 +23,7 @@ object Main {
       .appName("Spark Tweets Streaming")
       .config("spark.streaming.stopGracefullyOnShutdown", "true")
       .config("spark.sql.shuffle.partitions",4)
+      .config("spark.sql.legacy.timeParserPolicy", "LEGACY")
       .master("local[*]")
       .getOrCreate()
     import spark.implicits._
@@ -34,37 +36,15 @@ object Main {
       .option("startingOffsets", "earliest")
       .load()
 
-    // Tweets Schema
-    val tweetSchema = Tweet.TweetSchema()
-    // Select and cast key and value to String
-    val kafka_df_casted = kafka_df.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
 
-    //streaming df
 
-    val streaming_df = kafka_df_casted.withColumn("values_json",from_json(col("value"),tweetSchema)).selectExpr("values_json.*")
-
-    // Streaming df schema for debugging
-    println("StreamingDF Schema : ")
-    streaming_df.printSchema()
-    // Extract nested hashtags from dataframe
-
-    val extracted_df = streaming_df.withColumn("hashtags",col("entities.hashtags.text")).drop(col("entities"))
-    println("Exlpoded DF Schema : ")
-    extracted_df.printSchema()
-
-    val df_filtered = extracted_df.filter(col("geo").isNotNull)
 
 
 
     // Adding Keys & Values to store on processed topic , serialization of the whole row as JSON
 
-    val final_df = df_filtered.
-      withColumn("key",lit(null).cast(StringType)).
-      withColumn("value",to_json(struct(df_filtered.columns.map(col):_*))).
+    val final_df = ProcessingTweets.processingTweets(kafka_df)
 
-      select("key","value")
-
-    final_df.printSchema()
 
 
 
@@ -81,10 +61,11 @@ object Main {
     val query = final_df
       .writeStream
       .outputMode("append")
-      .format("console")
+      .format("kafka")
+      .trigger(Trigger.ProcessingTime("10 seconds"))
       .option("kafka.bootstrap.servers","localhost:9092")
       .option("topic","processed-tweets-topic")
-      .option("checkpointLocation","checkpoint_dir_kafka")
+      .option("checkpointLocation","temp/kafka_checkpoint")
       .option("truncate","false")
       .start()
 
