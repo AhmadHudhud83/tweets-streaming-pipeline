@@ -10,9 +10,6 @@ object RawDataProducer {
     props.put("bootstrap.servers", "localhost:9092")
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-    // Settings for simulating stream
-    props.put("linger.ms", "1000")
-    props.put("batch.size", "16384")
 
     // Kafka Producer
     val producer = new KafkaProducer[String, String](props)
